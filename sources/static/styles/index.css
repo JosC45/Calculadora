@@ -1,0 +1,20 @@
+h1{
+    background-color: blue;
+}
+footer{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: lightblue;
+}
+footer p{
+    margin-left: 300px;
+    margin-right: 300px;
+}
+main{
+    background-color: gold;
+}
+button{
+    display: block;
+    margin: 0 auto;
+}
