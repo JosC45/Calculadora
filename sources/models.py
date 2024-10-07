@@ -15,6 +15,10 @@ class Seleccion(db.Model):
     derrotas=db.Column(db.Integer,nullable=False)
     goles_f=db.Column(db.Integer,nullable=False)
     goles_c=db.Column(db.Integer,nullable=False)
+
+    partidos_local=db.relationship('Partido',foreign_keys='Partido.local_id', backref='equipo_local', lazy=True)
+    partidos_visitante= db.relationship('Partido',foreign_keys='Partido.visitante_id',backref='equipo_visitante',lazy=True)
+
     def puntajes(self):
         puntos=self.victorias*3+self.empates
         return puntos
@@ -25,5 +29,6 @@ class Seleccion(db.Model):
 class Partido(db.Model):
     __tablename__="partidos"
     id=db.Column(db.Integer,primary_key=True)
-    local=db.Column(db.Integer,db.ForeignKey("seleccion.id"),nullable=False)
-    visitante=db.Column(db.Integer,db.ForeignKey("seleccion.id"),nullable=False)
+    local_id=db.Column(db.Integer,db.ForeignKey("seleccion.id"),nullable=False)
+    visitante_id=db.Column(db.Integer,db.ForeignKey("seleccion.id"),nullable=False)
+    fecha=db.Column(db.Integer,nullable=False)

@@ -11,12 +11,27 @@ Calculadora
     <th>Visitante</th>
 </thead>
 <tbody>
+    {% if primera %}
+    <form action="{{url_for('resultados',fecha_id=fecha_id)}}" method="POST">
+    {% for prim in primera %}      
     <tr>
-    <th>d</th>
-    <th><input type="number" name="a1"></th>
-    <th><input type="number" name="a2"></th>
-    <th>c</th>
+    <div><label for="goles_local_{{prim.equipo_local.nombre}}"><th>{{prim.equipo_local.nombre}}</th></label>
+    <th><input name="goles_local_{{prim.equipo_local.nombre}}" type="number" name="a1"></th></div>
+    <div><th><input type="number" name="goles_visita_{{prim.equipo_visitante.nombre}}"></th>
+    <label for="goles_visita_{{prim.equipo_visitante.nombre}}"><th>{{prim.equipo_visitante.nombre}}</th></label></div>
+    <br>
     </tr>
+    {% endfor %}
+    <button type="submit" >Siguiente</button>
+    </form>
+    {% else %}
+    <th>{{mensaje}}</th>
+    {% endif %}
 </tbody>
 </table>
+<script>
+    window.addEventListener("beforeunload",function(){
+        fetch('/salir')
+    })
+</script>
 {% endblock%}
