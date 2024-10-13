@@ -5,16 +5,12 @@ from flask_migrate import Migrate
 
 
 app=Flask(__name__)
-app.secret_key=os.urandom(24)
 
-db_user='root'
-db_password='12345'
-db_host='127.0.0.1'
-db_port=3306
-db_database='base_de_datos'
+
+
 
 # # Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Evita advertencias innecesarias
 db=SQLAlchemy(app)
 from models import Seleccion,Partido
