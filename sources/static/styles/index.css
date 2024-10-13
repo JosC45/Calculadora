@@ -8,13 +8,37 @@ footer{
     background-color: lightblue;
 }
 footer p{
-    margin-left: 300px;
-    margin-right: 300px;
+    margin-left: 200px;
+    margin-right: 200px;
 }
 main{
-    background-color: gold;
+    background-color: lightgreen;
+    border:black;
+    margin:0;
+}
+*{
+    box-sizing: border-box;
 }
 button{
     display: block;
     margin: 0 auto;
+}
+th,td{
+    border: solid 2px ;
+    border-radius: 3px;
+    padding:2px;
+}
+table{
+    border-collapse: collapse;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Ocultar las flechas */
+    margin: 0; /* Quitar el margen */
+}
+input{
+    width:50px;
+}
+.position-table{
+    width: 70px;
 }

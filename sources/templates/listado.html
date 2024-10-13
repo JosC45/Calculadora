@@ -8,6 +8,12 @@ Listado
         <tr>
         <th>Pais</th>
         <th>Puntaje</th>
+        <th>Victorias</th>
+        <th>Empates</th>
+        <th>Derrotas</th>
+        <th>Goles a favor</th>
+        <th>Goles en contra</th>
+        <th>Diferencia de gol</th>
         </tr>
     </thead>
     {%if pais %}
@@ -16,9 +22,16 @@ Listado
         <tr>
             <th>{{pa.nombre}}</th>
             <th>{{pa.puntajes()}}</th>
+            <th>{{pa.victorias}}</th>
+            <th>{{pa.empates}}</th>
+            <th>{{pa.derrotas}}</th>
+            <th>{{pa.goles_f}}</th>
+            <th>{{pa.goles_c}}</th>
+            <th>{{pa.goles()}}</th>
         </tr>
         {% endfor %}
     </tbody>
     {% endif %}
 </table>
+<button><a href="{{url_for('salir')}}">Salir</a></button>
 {% endblock%}

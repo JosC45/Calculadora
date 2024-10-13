@@ -1,4 +1,4 @@
-from flask import Flask,render_template,url_for,request,redirect
+from flask import Flask,render_template,url_for,request,redirect,session
 from flask_sqlalchemy import SQLAlchemy
 import pymysql,os
 from flask_migrate import Migrate
@@ -16,22 +16,6 @@ db_database='base_de_datos'
 # # Configuración de la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345@localhost:3306/base_de_datos'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Evita advertencias innecesarias
-# def coneccion():
-#     try:
-#         conexion=pymysql.connect(
-#             host=db_host,
-#             user=db_user,
-#             password=db_password,
-#             database=db_database,  
-#             port=db_port, 
-#             charset='utf8',
-#         )
-#         print("Conexion con exito")
-#         return conexion
-#     except pymysql.MySQLError as e:
-#         print(f"Error al conectar {e}")
-#         return None
-# coneccion()
 db=SQLAlchemy(app)
 from models import Seleccion,Partido
 migrate=Migrate(app,db)
@@ -63,6 +47,7 @@ def resultados(fecha_id):
             if goles_local is not None and goles_visita is not None:
                 goles_local=int(goles_local)
                 goles_visita=int(goles_visita)
+                
                 if goles_local>goles_visita:
                     partido.equipo_local.victorias+=1
                     partido.equipo_visitante.derrotas+=1
@@ -84,7 +69,10 @@ def resultados(fecha_id):
             return redirect(url_for('resultados',fecha_id=siguiente_fecha.fecha))
         else:
             return redirect(url_for('listar'))
-    return render_template('calculadora.html',primera=partidos,fecha_id=fecha_id)
+    seleccion=Seleccion.query.all()
+    at=[]
+    pais= sorted(seleccion, key=lambda x: x.puntajes(), reverse=True)
+    return render_template('calculadora.html',primera=partidos,fecha_id=fecha_id,pais=pais)
 
 @app.route('/ordenar')
 def listar():
@@ -95,16 +83,71 @@ def listar():
 
 
 @app.route('/calculadora')
-def index():
+def calculadora():
     return render_template("calculadora.html")
+
+@app.route('/listado')
+def prueba():
+    seleccion=Seleccion.query.all()
+    for i in range(0,9):
+        print(seleccion[i].nombre)
+    return None
 
 @app.route('/salir')
 def salir():
-    for 
-        Partido.query.filter(fecha=i).delete()
-    
+    seleccion=Seleccion.query.all()
+    seleccion[0].victorias=6
+    seleccion[0].empates=0
+    seleccion[0].derrotas=2
+    seleccion[0].goles_f=12
+    seleccion[0].goles_c=4
+    seleccion[1].victorias=3
+    seleccion[1].empates=0
+    seleccion[1].derrotas=5
+    seleccion[1].goles_f=10
+    seleccion[1].goles_c=15
+    seleccion[2].victorias=3
+    seleccion[2].empates=1
+    seleccion[2].derrotas=4
+    seleccion[2].goles_f=9
+    seleccion[2].goles_c=8
+    seleccion[3].victorias=1
+    seleccion[3].empates=2
+    seleccion[3].derrotas=5
+    seleccion[3].goles_f=4
+    seleccion[3].goles_c=12
+    seleccion[4].victorias=4
+    seleccion[4].empates=4
+    seleccion[4].derrotas=0
+    seleccion[4].goles_f=9
+    seleccion[4].goles_c=5
+    seleccion[5].victorias=4
+    seleccion[5].empates=2
+    seleccion[5].derrotas=2
+    seleccion[5].goles_f=6
+    seleccion[5].goles_c=4
+    seleccion[6].victorias=2
+    seleccion[6].empates=3
+    seleccion[6].derrotas=3
+    seleccion[6].goles_f=2
+    seleccion[6].goles_c=3
+    seleccion[7].victorias=0
+    seleccion[7].empates=3
+    seleccion[7].derrotas=5
+    seleccion[7].goles_f=2
+    seleccion[7].goles_c=10
+    seleccion[8].victorias=4
+    seleccion[8].empates=3
+    seleccion[8].derrotas=1
+    seleccion[8].goles_f=13
+    seleccion[8].goles_c=5
+    seleccion[9].victorias=2
+    seleccion[9].empates=4
+    seleccion[9].derrotas=2
+    seleccion[9].goles_f=6
+    seleccion[9].goles_c=7
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('index'))   
 
 if __name__=="__main__":
     app.run(debug=True)

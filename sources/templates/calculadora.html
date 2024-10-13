@@ -16,22 +16,49 @@ Calculadora
     {% for prim in primera %}      
     <tr>
     <div><label for="goles_local_{{prim.equipo_local.nombre}}"><th>{{prim.equipo_local.nombre}}</th></label>
-    <th><input name="goles_local_{{prim.equipo_local.nombre}}" type="number" name="a1"></th></div>
-    <div><th><input type="number" name="goles_visita_{{prim.equipo_visitante.nombre}}"></th>
+    <th><input name="goles_local_{{prim.equipo_local.nombre}}" type="number" name="a1" min="0" required></th></div>
+    <div><th><input type="number" name="goles_visita_{{prim.equipo_visitante.nombre}}" min="0" required></th>
     <label for="goles_visita_{{prim.equipo_visitante.nombre}}"><th>{{prim.equipo_visitante.nombre}}</th></label></div>
     <br>
     </tr>
     {% endfor %}
-    <button type="submit" >Siguiente</button>
-    </form>
-    {% else %}
-    <th>{{mensaje}}</th>
+    <br>
+    <tr>
+    <th><button type="submit">Siguiente</button></th>
+    <th><button><a href="{{url_for('salir')}}">Salir</a></button></th>
+    </tr>
+</form>
     {% endif %}
 </tbody>
 </table>
-<script>
-    window.addEventListener("beforeunload",function(){
-        fetch('/salir')
-    })
-</script>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th class="position-table">Pais</th>
+            <th class="position-table">Puntaje</th>
+            <th class="position-table">Victorias</th>
+            <th class="position-table">Empates</th>
+            <th class="position-table">Derrotas</th>
+            <th class="position-table">Goles a favor</th>
+            <th class="position-table">Goles en contra</th>
+            <th class="position-table">Diferencia de gol</th>
+        </tr>
+    </thead>
+    </tbody>
+    {% for pa in pais %}
+    <tr>
+        <th>{{pa.nombre}}</th>
+        <th>{{pa.puntajes()}}</th>
+        <th>{{pa.victorias}}</th>
+        <th>{{pa.empates}}</th>
+        <th>{{pa.derrotas}}</th>
+        <th>{{pa.goles_f}}</th>
+        <th>{{pa.goles_c}}</th>
+        <th>{{pa.goles()}}</th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% endblock%}
