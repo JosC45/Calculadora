@@ -14,7 +14,7 @@ db_port=3306
 db_database='base_de_datos'
 
 # # Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345@localhost:3306/base_de_datos'
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Evita advertencias innecesarias
 db=SQLAlchemy(app)
 from models import Seleccion,Partido
