@@ -13,7 +13,7 @@ app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Evita advertencias innecesarias
 db=SQLAlchemy(app)
-from models import Seleccion,Partido
+from .models import Seleccion,Partido
 migrate=Migrate(app,db)
 
 @app.route('/conexion')
